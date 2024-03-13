@@ -61,4 +61,24 @@ CREATE TABLE Utilisateur (
     Role_Utilisateur VARCHAR(100)
 );
 ```
+# Jeu de donnée 
+
+-- Insertion des utilisateurs
+INSERT INTO Utilisateur (ID_Utilisateur, Nom_Utilisateur, Role_Utilisateur) VALUES
+(1, 'Jean Dupont', 'Administrateur'),
+(2, 'Marie Curie', 'Utilisateur');
+
+-- Insertion des comptes
+INSERT INTO Compte (ID_Compte, Nom_Compte, Solde, Date_Ouverture) VALUES
+(1, 'Compte Courant', 10000.00, '2023-01-01'),
+(2, 'Compte Épargne', 5000.00, '2023-01-10');
+
+-- Insertion des transactions
+INSERT INTO Transaction (ID_Transaction, Date_Transaction, Montant, Type_Transaction, ID_Compte) VALUES
+(1, '2023-02-01', 150.00, 'Débit', 1),
+(2, '2023-02-02', 200.00, 'Crédit', 2);
+
+
+# Création d'utilisateurs
+
 
