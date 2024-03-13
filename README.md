@@ -52,6 +52,17 @@ Le dictionnaire de données décrit la structure des tables de la base de donné
 
 ![MCD](MCDv2.svg)
 
+## Modèle Literaire de Donnée (MLD)
+
+Compte(ID_Compte, Nom_Compte, Solde, Date_Ouverture, ID_Utilisateur)
+Transaction(ID_Transaction, Date_Transaction, Montant, Type_Transaction, ID_Compte)
+Client(ID_Client, Nom_Client, Adresse_Client, Email_Client, Telephone_Client)
+Fournisseur(ID_Fournisseur, Nom_Fournisseur, Adresse_Fournisseur, Email_Fournisseur, Telephone_Fournisseur)
+Facture(ID_Facture, Date_Facture, Montant_Total, ID_Client, ID_Fournisseur, Statut_Facture)
+Article(ID_Article, Nom_Article, Description_Article, Prix_Unitaire)
+LigneFacture(ID_LigneFacture, ID_Facture, ID_Article, Quantite, Prix_Total)
+Alerte(ID_Alerte, ID_Compte, Message, Date_Alerte)
+
 ## Modèle Physique de Données (MPD)
 
 ```sql
