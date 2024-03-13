@@ -170,4 +170,4 @@ GRANT ALL PRIVILEGES ON baseDeDonneesComptabilite.* TO 'comptaUser'@'localhost';
 FLUSH PRIVILEGES;
 ```
 
-© Tous droits réservés 
+© Baptiste Longuepee et Thibaut Gabet. Tous droits réservés
