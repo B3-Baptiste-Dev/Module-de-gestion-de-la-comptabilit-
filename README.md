@@ -42,6 +42,11 @@ Le dictionnaire de données décrit la structure des tables de la base de donné
 |                    | ID_Article           | INT             | Identifiant de l'article facturé                |
 |                    | Quantite             | INT             | Quantité de l'article                           |
 |                    | Prix_Total           | DECIMAL         | Prix total pour la ligne (quantité * prix unitaire) |
+| Alerte          | ID_Alerte         | INT             | Identifiant unique de l'alerte                |
+|                 | ID_Compte         | INT             | Identifiant du compte associé à l'alerte      |
+|                 | Message           | VARCHAR(255)    | Message de l'alerte                           |
+|                 | Date_Alerte       | TIMESTAMP       | Date et heure de création de l'alerte         |
+
 
 ## Modèle Conceptuel de Données (MCD)
 
@@ -111,7 +116,7 @@ CREATE TABLE LigneFacture (
     FOREIGN KEY (ID_Facture) REFERENCES Facture(ID_Facture),
     FOREIGN KEY (ID_Article) REFERENCES Article(ID_Article)
 );
-CREATE TABLE IF NOT EXISTS Alerte (
+CREATE TABLE Alerte (
     ID_Alerte INT AUTO_INCREMENT PRIMARY KEY,
     ID_Compte INT NOT NULL,
     Message VARCHAR(255) NOT NULL,
@@ -164,3 +169,5 @@ CREATE USER 'comptaUser'@'localhost' IDENTIFIED BY 'motDePasseFort';
 GRANT ALL PRIVILEGES ON baseDeDonneesComptabilite.* TO 'comptaUser'@'localhost';
 FLUSH PRIVILEGES;
 ```
+
+© Tous droits réservés 
