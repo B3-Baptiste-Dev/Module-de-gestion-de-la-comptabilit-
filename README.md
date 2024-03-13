@@ -181,4 +181,66 @@ GRANT ALL PRIVILEGES ON baseDeDonneesComptabilite.* TO 'comptaUser'@'localhost';
 FLUSH PRIVILEGES;
 ```
 
+## Questions : 
+
+CRUD : 
+
+Vous devez élaborer les fonctionnalités nécessaires à la gestion d’un compte bancaire 
+
+```sql
+
+INSERT INTO Compte (Nom_Compte, Solde, Date_Ouverture) VALUES ('Compte Courant', 1000.00, '2023-03-15'); 
+
+SELECT * FROM Compte WHERE ID_Compte = 1; 
+
+UPDATE Compte SET Nom_Compte = 'Nouveau Nom Compte' WHERE ID_Compte = 1; 
+
+DELETE FROM Compte WHERE ID_Compte = 1;
+
+```
+
+Trigger : 
+
+Mettre à jour automatiquement une table alerte lors que l’ajout d’une ligne comptable provoque un découvert sur le compte bancaire 
+```sql
+DELIMITER $$ 
+
+-- Trigger pour gérer le découvert sur un compte bancaire 
+
+CREATE TRIGGER alerte_decouvert 
+
+    AFTER INSERT ON Transaction 
+
+    FOR EACH ROW 
+
+BEGIN 
+
+    DECLARE soldeActuel DECIMAL(15,2); 
+
+    DECLARE soldeApresTransaction DECIMAL(15,2); 
+
+    -- Récupère le solde actuel du compte concerné 
+
+    SELECT Solde INTO soldeActuel FROM Compte WHERE ID_Compte = NEW.ID_Compte; 
+
+    -- Calcule le solde après la transaction 
+
+    SET soldeApresTransaction = soldeActuel + NEW.Montant; 
+
+    -- Vérifie si le solde après transaction est négatif 
+
+    IF soldeApresTransaction < 0 THEN 
+
+        -- Insère une alerte de découvert 
+
+        INSERT INTO Alerte (ID_Compte, Message) 
+
+        VALUES (NEW.ID_Compte, 'Découvert provoqué par une nouvelle transaction'); 
+
+END IF; 
+
+END$$ 
+
+DELIMITER ; 
+```
 © Baptiste Longuepee et Thibaut Gabet. Tous droits réservés
