@@ -19,7 +19,7 @@
 
 # Modèle Conceptuel de Données (MCD)
 
-![MCD](lien_vers_l'image_du_MCD.png)
+![MCD](MCD.svg)
 
 - Compte(ID_Compte, Nom_Compte, Solde, Date_Ouverture)
 - Transaction(ID_Transaction, Date_Transaction, Montant, Type_Transaction, ID_Compte)
