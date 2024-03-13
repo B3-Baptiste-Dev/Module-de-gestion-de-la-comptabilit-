@@ -199,6 +199,13 @@ DELETE FROM Compte WHERE ID_Compte = 1;
 
 ```
 
+Accès aux données d’un autre module : 
+```sql
+SELECT *
+FROM Produits
+WHERE Stock > 100;
+```
+
 Trigger : 
 
 Mettre à jour automatiquement une table alerte lors que l’ajout d’une ligne comptable provoque un découvert sur le compte bancaire 
