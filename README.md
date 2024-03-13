@@ -12,9 +12,6 @@
 | Date_Transaction      | DATE         | Date à laquelle la transaction a été réalisée       |
 | Montant               | DECIMAL      | Montant de la transaction                           |
 | Type_Transaction      | VARCHAR(50)  | Type de la transaction (ex : "Crédit", "Débit")     |
-| ID_Utilisateur        | INT          | Identifiant unique pour chaque utilisateur          |
-| Nom_Utilisateur       | VARCHAR(255) | Nom de l'utilisateur                                |
-| Role_Utilisateur      | VARCHAR(100) | Rôle de l'utilisateur (ex : "Administrateur", "User") |
 
 
 # Modèle Conceptuel de Données (MCD)
@@ -23,17 +20,14 @@
 
 - Compte(ID_Compte, Nom_Compte, Solde, Date_Ouverture)
 - Transaction(ID_Transaction, Date_Transaction, Montant, Type_Transaction, ID_Compte)
-- Utilisateur(ID_Utilisateur, Nom_Utilisateur, Role_Utilisateur)
 
 Associations:
 - Un Compte peut avoir plusieurs Transactions
-- Un Utilisateur peut réaliser plusieurs Transactions
 
 # Modèle Logique de Données (MLD)
 
 - Compte(ID_Compte PK, Nom_Compte, Solde, Date_Ouverture)
 - Transaction(ID_Transaction PK, Date_Transaction, Montant, Type_Transaction, ID_Compte FK)
-- Utilisateur(ID_Utilisateur PK, Nom_Utilisateur, Role_Utilisateur)
 
 
 # Modèle Physique de Données (MPD)
@@ -54,31 +48,26 @@ CREATE TABLE Transaction (
     ID_Compte INT,
     FOREIGN KEY (ID_Compte) REFERENCES Compte(ID_Compte)
 );
-
-CREATE TABLE Utilisateur (
-    ID_Utilisateur INT PRIMARY KEY,
-    Nom_Utilisateur VARCHAR(255),
-    Role_Utilisateur VARCHAR(100)
-);
 ```
 # Jeu de donnée 
 
--- Insertion des utilisateurs
-INSERT INTO Utilisateur (ID_Utilisateur, Nom_Utilisateur, Role_Utilisateur) VALUES
-(1, 'Jean Dupont', 'Administrateur'),
-(2, 'Marie Curie', 'Utilisateur');
-
 -- Insertion des comptes
+```sql
 INSERT INTO Compte (ID_Compte, Nom_Compte, Solde, Date_Ouverture) VALUES
 (1, 'Compte Courant', 10000.00, '2023-01-01'),
 (2, 'Compte Épargne', 5000.00, '2023-01-10');
-
+```
 -- Insertion des transactions
+```sql
 INSERT INTO Transaction (ID_Transaction, Date_Transaction, Montant, Type_Transaction, ID_Compte) VALUES
 (1, '2023-02-01', 150.00, 'Débit', 1),
 (2, '2023-02-02', 200.00, 'Crédit', 2);
-
-
+```
 # Création d'utilisateurs
-
+-- Création d'un utilisateur et attribution des droits
+```sql
+CREATE USER 'comptaUser'@'localhost' IDENTIFIED BY 'motDePasseFort';
+GRANT ALL PRIVILEGES ON baseDeDonneesComptabilite.* TO 'comptaUser'@'localhost';
+FLUSH PRIVILEGES;
+```
 
