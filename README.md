@@ -52,7 +52,7 @@ Le dictionnaire de données décrit la structure des tables de la base de donné
 
 ![MCD](MCDv2.svg)
 
-## Modèle Literaire de Donnée (MLD)
+## Modèle Logique de Données (MLD)
 
 Compte(ID_Compte, Nom_Compte, Solde, Date_Ouverture, ID_Utilisateur)
 Transaction(ID_Transaction, Date_Transaction, Montant, Type_Transaction, ID_Compte)
