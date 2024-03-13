@@ -1,62 +1,51 @@
 # Module de Gestion de la Comptabilité
 
+Ce module est conçu pour faciliter la gestion comptable en enregistrant les comptes, les transactions, les clients, les fournisseurs, les factures et les articles associés.
+
 ## Dictionnaire de données
 
-|-----------------|--------------|-----------------------------------------------------|
-| ID_Compte       | INT          | Identifiant unique pour chaque compte               |
-| Nom_Compte      | VARCHAR(255) | Nom du compte (ex : "Fournisseurs", "Clients")      |
-| Solde           | DECIMAL      | Solde actuel du compte                              |
-| Date_Ouverture  | DATE         | Date d'ouverture du compte                          |
-| Nom              | Type         | Description                                         |
-|------------------|--------------|-----------------------------------------------------|
-| ID_Transaction   | INT          | Identifiant unique pour chaque transaction          |
-| Date_Transaction | DATE         | Date à laquelle la transaction a été réalisée       |
-| Montant          | DECIMAL      | Montant de la transaction                           |
-| Type_Transaction | VARCHAR(50)  | Type de la transaction (ex : "Crédit", "Débit")     |
-| ID_Compte        | INT          | Identifiant du compte associé                       |
-| Nom               | Type         | Description                           |
-|-------------------|--------------|---------------------------------------|
-| ID_Client         | INT          | Identifiant unique du client          |
-| Nom_Client        | VARCHAR(255) | Nom du client                         |
-| Adresse_Client    | VARCHAR(255) | Adresse du client                     |
-| Email_Client      | VARCHAR(255) | Email du client                       |
-| Telephone_Client  | VARCHAR(20)  | Téléphone du client                   |
-| Nom                 | Type         | Description                            |
-|---------------------|--------------|----------------------------------------|
-| ID_Fournisseur      | INT          | Identifiant unique du fournisseur      |
-| Nom_Fournisseur     | VARCHAR(255) | Nom du fournisseur                     |
-| Adresse_Fournisseur | VARCHAR(255) | Adresse du fournisseur                 |
-| Email_Fournisseur   | VARCHAR(255) | Email du fournisseur                   |
-| Telephone_Fournisseur| VARCHAR(20) | Téléphone du fournisseur               |
-| Nom             | Type         | Description                                  |
-|-----------------|--------------|----------------------------------------------|
-| ID_Facture      | INT          | Identifiant unique de la facture             |
-| Date_Facture    | DATE         | Date de création de la facture               |
-| Montant_Total   | DECIMAL      | Montant total de la facture                  |
-| ID_Client       | INT          | Identifiant du client associé à la facture   |
-| ID_Fournisseur  | INT          | Identifiant du fournisseur (si applicable)   |
-| Statut_Facture  | VARCHAR(50)  | Statut de la facture (ex : "Payée", "Non payée") |
-| Nom                 | Type         | Description                      |
-|---------------------|--------------|----------------------------------|
-| ID_Article          | INT          | Identifiant unique de l'article |
-| Nom_Article         | VARCHAR(255) | Nom de l'article                |
-| Description_Article | TEXT         | Description de l'article        |
-| Prix_Unitaire       | DECIMAL      | Prix unitaire de l'article      |
-| Nom               | Type         | Description                                       |
-|-------------------|--------------|---------------------------------------------------|
-| ID_LigneFacture   | INT          | Identifiant unique de la ligne de facture         |
-| ID_Facture        | INT          | Identifiant de la facture associée                |
-| ID_Article        | INT          | Identifiant de l'article facturé                  |
-| Quantite          | INT          | Quantité de l'article                             |
-| Prix_Total        | DECIMAL      | Prix total pour la ligne (quantité * prix unitaire) |
+Le dictionnaire de données décrit la structure des tables de la base de données :
+
+| Nom de la Table    | Nom de la Colonne    | Type de Donnée | Description                                     |
+|--------------------|----------------------|-----------------|-------------------------------------------------|
+| Compte             | ID_Compte            | INT             | Identifiant unique pour chaque compte           |
+|                    | Nom_Compte           | VARCHAR(255)    | Nom du compte (ex : "Fournisseurs", "Clients")  |
+|                    | Solde                | DECIMAL         | Solde actuel du compte                          |
+|                    | Date_Ouverture       | DATE            | Date d'ouverture du compte                      |
+| Transaction        | ID_Transaction       | INT             | Identifiant unique pour chaque transaction      |
+|                    | Date_Transaction     | DATE            | Date à laquelle la transaction a été réalisée   |
+|                    | Montant              | DECIMAL         | Montant de la transaction                       |
+|                    | Type_Transaction     | VARCHAR(50)     | Type de la transaction (ex : "Crédit", "Débit") |
+|                    | ID_Compte            | INT             | Identifiant du compte associé à la transaction  |
+| Client             | ID_Client            | INT             | Identifiant unique du client                    |
+|                    | Nom_Client           | VARCHAR(255)    | Nom du client                                   |
+|                    | Adresse_Client       | VARCHAR(255)    | Adresse du client                               |
+|                    | Email_Client         | VARCHAR(255)    | Email du client                                 |
+|                    | Telephone_Client     | VARCHAR(20)     | Téléphone du client                             |
+| Fournisseur        | ID_Fournisseur       | INT             | Identifiant unique du fournisseur               |
+|                    | Nom_Fournisseur      | VARCHAR(255)    | Nom du fournisseur                              |
+|                    | Adresse_Fournisseur  | VARCHAR(255)    | Adresse du fournisseur                          |
+|                    | Email_Fournisseur    | VARCHAR(255)    | Email du fournisseur                            |
+|                    | Telephone_Fournisseur| VARCHAR(20)     | Téléphone du fournisseur                        |
+| Facture            | ID_Facture           | INT             | Identifiant unique de la facture                |
+|                    | Date_Facture         | DATE            | Date de création de la facture                  |
+|                    | Montant_Total        | DECIMAL         | Montant total de la facture                     |
+|                    | ID_Client            | INT             | Identifiant du client associé à la facture      |
+|                    | ID_Fournisseur       | INT             | Identifiant du fournisseur (si applicable)      |
+|                    | Statut_Facture       | VARCHAR(50)     | Statut de la facture (ex : "Payée", "Non payée")|
+| Article            | ID_Article           | INT             | Identifiant unique de l'article                 |
+|                    | Nom_Article          | VARCHAR(255)    | Nom de l'article                                |
+|                    | Description_Article  | TEXT            | Description de l'article                        |
+|                    | Prix_Unitaire        | DECIMAL         | Prix unitaire de l'article                      |
+| LigneFacture       | ID_LigneFacture      | INT             | Identifiant unique de la ligne de facture       |
+|                    | ID_Facture           | INT             | Identifiant de la facture associée              |
+|                    | ID_Article           | INT             | Identifiant de l'article facturé                |
+|                    | Quantite             | INT             | Quantité de l'article                           |
+|                    | Prix_Total           | DECIMAL         | Prix total pour la ligne (quantité * prix unitaire) |
 
 ## Modèle Conceptuel de Données (MCD)
 
 ![MCD](MCDv2.svg)
-
-- La structure exacte du MCD doit être dessinée et sauvegardée en tant qu'image.
-
-- La structure MLD reflète le dictionnaire de données ci-dessus, avec les relations appropriées entre les tables.
 
 ## Modèle Physique de Données (MPD)
 
